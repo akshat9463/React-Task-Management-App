@@ -6,7 +6,7 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
-    const res = await axios.get("http://localhost:8080/api/tasks");
+    const res = await axios.get("/api/tasks");
     setTasks(res.data);
   };
 
@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   const deleteTask = async (id) => {
     if (window.confirm("Delete this task?")) {
-      await axios.delete(`http://localhost:8080/api/tasks/${id}`);
+      await axios.delete(`/api/tasks/${id}`);
       fetchTasks();
     }
   };

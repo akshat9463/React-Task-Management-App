@@ -8,14 +8,14 @@ export default function EditTask() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/tasks/${id}`).then(res => setTask(res.data));
+    axios.get(`/api/tasks/${id}`).then(res => setTask(res.data));
   }, [id]);
 
   const handleChange = (e) => setTask({ ...task, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8080/api/tasks/${id}`, task);
+    await axios.put(`/api/tasks/${id}`, task);
     navigate("/");
   };
 

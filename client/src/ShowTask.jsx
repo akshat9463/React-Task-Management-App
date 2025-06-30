@@ -7,7 +7,7 @@ export default function ShowTask() {
   const [task, setTask] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/tasks/${id}`).then(res => setTask(res.data));
+    axios.get(`/api/tasks/${id}`).then(res => setTask(res.data));
   }, [id]);
 
   if (!task) return <p>Loading...</p>;
