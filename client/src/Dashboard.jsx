@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
 
@@ -27,7 +28,7 @@ export default function Dashboard() {
       <Link to="/add" className="btn btn-primary mb-3">Add Task</Link>
       <div className="row">
         {tasks.map((task) => (
-          <div className="col-md-4 mb-3" key={task._id}>
+          <div className="col-md-4 mb-3 w-100" key={task._id}>
             <div className="card h-100">
               <div className="card-body">
                 <h5 className="card-title">{task.title}</h5>
@@ -37,8 +38,8 @@ export default function Dashboard() {
                 </span>
               </div>
               <div className="card-footer d-flex justify-content-between">
-                <Link to={`/task/${task._id}`} className="btn btn-info btn-sm">View</Link>
-                <Link to={`/edit/${task._id}`} className="btn btn-warning btn-sm">Edit</Link>
+                <Link to={`/task/${task._id}`} className="btn btn-info btn-sm me-2">View</Link>
+                <Link to={`/edit/${task._id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
                 <button onClick={() => deleteTask(task._id)} className="btn btn-danger btn-sm">Delete</button>
               </div>
             </div>
