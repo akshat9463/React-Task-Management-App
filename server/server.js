@@ -2,16 +2,17 @@ if(process.env.NODE_ENV != "production"){
   require("dotenv").config();
 }
 
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const port = 8080;
 const Tasks = require('./models/tasks');
-const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+// const cors = require('cors');
+const path = require('path');
 
-const dbUrl = process.env.MONGOATLAS_URL;
+// const dbUrl = 'mongodb://127.0.0.1:28017/taskmanagement';
+dbUrl = process.env.MONGOATLAS_URL;
 
 main()
   .then(() => {
@@ -23,32 +24,14 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 3600,
-});
-
-store.on("error",()=>{
-  console.log("error in mongo session stroe", err);
-});
-
-const sessionOptions = {
-  store,
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie:{
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true
-  }
-}
-app.use(session(sessionOptions));
 app.use(express.json()); 
-app.use(cors()); // allow all origins by default , it connect localhost: 8080 to 5173
+// app.use(cors()); // allow all origins by default , it connect localhost: 8080 to 5173
+app.use(express.static('dist'));
+
+
+// Serve Vite build files
+app.use(express.static(path.join(__dirname, 'dist')));
+
 
 // dashboard route
 app.get('/api/tasks', async(req,res)=>{
